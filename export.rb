@@ -15,28 +15,24 @@ class Export
   end
 
   def export
-    $stdout.puts "Exporting '#{es_base_uri}/#{index}' to #{output}..."
+    $stdout.puts "Exporting '#{ES_BASE_URI}/#{index}' to #{output}..."
     fetch_docs.each { |doc| save doc }
     $stdout.puts 'Exporting done.'
   end
 
   private
 
+  ES_BASE_URI = ENV.fetch('ES_BASE_URI') { 'http://localhost:9200' }.freeze
+  HEADER = { 'Content-Type' => 'application/json' }.freeze
   attr_reader :index, :output
 
-  HEADER = { 'Content-Type' => 'application/json' }.freeze
-
-  def es_base_uri
-    ENV['ES_BASE_URI'] || 'http://localhost:9200'
-  end
-
   def fetch_docs
-    uri = URI.parse "#{es_base_uri}/#{index}/_search?size=1000"
+    uri = URI.parse "#{ES_BASE_URI}/#{index}/_search?size=1000"
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri, HEADER)
     res = http.request(request)
     body = JSON.parse(res.body)
-    docs = body.dig('hits', 'hits')
+    docs = Hash(body.dig('hits', 'hits'))
     docs.sort_by { |hit| hit.dig('_id') }
   end
 

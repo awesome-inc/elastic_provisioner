@@ -1,5 +1,8 @@
 #!/bin/sh
-for file in `ls ./??_*.rb`; do
+
+set -ex
+
+for file in `ls ./provision/*.rb`; do
   echo $file
   ruby $file
   echo
