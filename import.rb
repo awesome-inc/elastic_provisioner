@@ -66,4 +66,3 @@ class Provision
 end
 
 Provision.call(ARGV[0] || 'import')
-

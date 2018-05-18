@@ -36,4 +36,5 @@ WORKDIR /app
 
 ADD . ./
 
-CMD bash -c "./provision.sh"
+ENTRYPOINT [ "ruby" ]
+CMD [ "provision.rb" ]

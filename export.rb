@@ -15,7 +15,7 @@ class Export
   end
 
   def export
-    $stdout.puts "Exporting '#{ES_BASE_URI}/#{index}' to #{output}..."
+    $stdout.puts "Exporting '#{ES_BASE_URI}/#{index}' to '#{output}'..."
     fetch_docs.each { |doc| save doc }
     $stdout.puts 'Exporting done.'
   end

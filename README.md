@@ -12,21 +12,33 @@ Import & export Elasticsearch data, e.g. Kibana dashboards & configuration.
 Upload documents from `/var/import` to Elasticsearch running on `http://localhost:9200`
 
 ```bash
-docker run --rm \
+$docker run --rm \
   -e ES_BASE_URI=http://localhost:9200 \
   -v /var/import:/app/import \
   awesomeinc/elastic_provisioner
+
+00_wait_for_es
+Waiting for Elasticsearch to come up...
+
+01_import
+Provisioning 'http://elasticsearch:9200'...
+....
+Provisioning done.
 ```
 
 ## Export
 
-Export documents of an Elasticsearch index (`http://localhost:9200`) to `/var/export`:
+Export documents of an Elasticsearch index to `/var/export`:
 
 ```bash
-docker run --rm \
+$docker run --rm \
   -v /var/export:/app/export \
   awesomeinc/elastic_provisioner \
-  ruby export.rb [index=.kibana] [output=export]
+  export.rb [.kibana] [export]
+
+Exporting 'http://elasticsearch:9200/.kibana' to 'export'...
+...
+Exporting done.
 ```
 
 This fetches the `.kibana` index and downloads documents into `/var/export`.
