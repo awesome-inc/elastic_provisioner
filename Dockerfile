@@ -1,14 +1,15 @@
-FROM jruby:9.1.12-alpine
+FROM jruby:9.1.17.0-jre-alpine
 
 # cf.: https://docs.docker.com/docker-cloud/builds/advanced/#environment-variables-for-building-and-testing
-ARG SOURCE_COMMIT=unknown
-ARG DOCKER_REPO=https://hub.docker.com/r/awesomeinc/elastic_provisioner/
-ARG CACHE_TAG=latest
-ARG IMAGE_NAME="awesomeinc/elastic_provisioner:latest"
+#ARG SOURCE_COMMIT=unknown
+ARG DOCKER_REPO
+ARG CACHE_TAG
+ARG IMAGE_NAME
 
 # cf.: https://medium.com/microscaling-systems/labelling-automated-builds-on-docker-hub-f3d073fb8e1
 # https://docs.docker.com/docker-cloud/builds/advanced/#override-build-test-or-push-commands
-ARG BUILD_DATE=unknown
+ARG VCS_REF
+ARG BUILD_DATE
 
 ARG NAME=elastic_provisioner
 ARG DESCRIPTION="Elastic Provisioner"
@@ -24,7 +25,7 @@ LABEL org.label-schema.build-date="${BUILD_DATE}" \
       org.label-schema.usage="${REPO}/blob/master/README.md" \
       org.label-schema.url="${DOCKER_REPO}" \
       org.label-schema.vcs-url="${REPO}" \
-      org.label-schema.vcs-ref="${SOURCE_COMMIT}" \
+      org.label-schema.vcs-ref="${VCS_REF}" \
       org.label-schema.vendor="${VENDOR}" \
       org.label-schema.version="${CACHE_TAG}" \
       org.label-schema.schema-version="1.0" \
