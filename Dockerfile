@@ -1,15 +1,14 @@
 FROM jruby:9.1.17.0-jre-alpine
 
 # cf.: https://docs.docker.com/docker-cloud/builds/advanced/#environment-variables-for-building-and-testing
-#ARG SOURCE_COMMIT=unknown
 ARG DOCKER_REPO
 ARG CACHE_TAG
 ARG IMAGE_NAME
 
 # cf.: https://medium.com/microscaling-systems/labelling-automated-builds-on-docker-hub-f3d073fb8e1
 # https://docs.docker.com/docker-cloud/builds/advanced/#override-build-test-or-push-commands
-ARG VCS_REF
-ARG BUILD_DATE
+ARG VCS_REF=unknown
+ARG BUILD_DATE=unknown
 
 ARG NAME=elastic_provisioner
 ARG DESCRIPTION="Elastic Provisioner"
@@ -37,4 +36,5 @@ WORKDIR /app
 ADD . ./
 
 ENTRYPOINT [ "ruby" ]
+
 CMD [ "provision.rb" ]
