@@ -32,7 +32,7 @@ class Export
     request = Net::HTTP::Get.new(uri.request_uri, HEADER)
     res = http.request(request)
     body = JSON.parse(res.body)
-    docs = Hash(body.dig('hits', 'hits'))
+    docs = Array(body.dig('hits', 'hits'))
     docs.sort_by { |hit| hit.dig('_id') }
   end
 
